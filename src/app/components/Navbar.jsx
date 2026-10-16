@@ -2,9 +2,18 @@
 
 import { useState } from "react";
 import { Link, Button } from "@heroui/react";
+import { useSession } from "@/lib/auth-client";
 
 function Navbar() {
+  //
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //
+  const { data: session, isPending } = useSession();
+  console.log(session);
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
+  //
   const navLink = (
     <>
       <li>
@@ -22,10 +31,19 @@ function Navbar() {
   );
   const authLink = (
     <>
-      <Link href="/sign-in">Login</Link>
-      <Link href="/sign-up">
-        <Button>Sign Up</Button>
-      </Link>
+      {session?.user ? (
+        <>
+          <Link href="/Profile">{session?.user.name}</Link>
+        </>
+      ) : (
+        <>
+          {" "}
+          <Link href="/sign-in">Login</Link>
+          <Link href="/sign-up">
+            <Button>Sign Up</Button>
+          </Link>
+        </>
+      )}
     </>
   );
 
@@ -65,7 +83,9 @@ function Navbar() {
           </button>
           <div className="flex items-center gap-3">
             {/* <Logo /> */}
-            <p className="font-bold">ACME</p>
+            <Link href="/" className="font-bold">
+              ACME
+            </Link>
           </div>
         </div>
         <ul className="hidden items-center gap-4 md:flex">{navLink}</ul>
