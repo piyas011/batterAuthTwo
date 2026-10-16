@@ -7,8 +7,8 @@ import { useSession } from "@/lib/auth-client";
 function Navbar() {
   //
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  //
   const { data: session, isPending } = useSession();
+  //
   console.log(session);
   if (isPending) {
     return <p>Loading...</p>;
@@ -17,15 +17,26 @@ function Navbar() {
   const navLink = (
     <>
       <li>
-        <Link href="#">Features</Link>
+        <Link href="/Features">Features</Link>
       </li>
       <li>
-        <Link href="#" className="font-medium text-accent" aria-current="page">
-          Dashboard
-        </Link>
+        {session?.user ? (
+          <>
+            {" "}
+            <Link
+              href="/Dashboard"
+              className="font-medium text-accent"
+              aria-current="page"
+            >
+              Dashboard
+            </Link>
+          </>
+        ) : (
+          <></>
+        )}
       </li>
       <li>
-        <Link href="#">Pricing</Link>
+        <Link href="/Pricing">Pricing</Link>
       </li>
     </>
   );

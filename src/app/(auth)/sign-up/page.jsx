@@ -21,17 +21,17 @@ function SignInPage() {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const data = Object.fromEntries(formData.entries());
-    //
-    console.log("user Data ", data);
 
-    const { data: resData, error } = await signUp.email({
+    const { error } = await signUp.email({
       name: data.name,
       email: data.email,
       password: data.password,
       callbackURL: "/",
     });
 
-    console.log(resData, error);
+    if (error) {
+      console.error("Sign-up failed:", error.message);
+    }
   };
   const handelGoogleSignIn = async () => {
     const data = await signIn.social({
