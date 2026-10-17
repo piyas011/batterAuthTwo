@@ -11,6 +11,14 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      void resend.emails.send({
+        from: "Acme <onboarding@resend.dev>",
+        to: user.email,
+        subject: "Reset Your Password",
+        html: `<p>Click the link to reset your password: ${url}</p>`,
+      });
+    },
   },
   emailVerification: {
     sendVerificationEmail: async ({ user, url }) => {
@@ -112,6 +120,9 @@ export const auth = betterAuth({
 </html>`,
       });
     },
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    expiresIn: 24 * 3600, // 1 hour
   },
   socialProviders: {
     google: {

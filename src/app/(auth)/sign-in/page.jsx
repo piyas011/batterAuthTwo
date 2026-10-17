@@ -111,6 +111,12 @@ function SignInPage() {
             Reset
           </Button>
         </div>
+        <p>
+          Forgot Your Password{" "}
+          <a className=" font-bold text-blue-500" href="/forgotPassword">
+            Forgot Password
+          </a>
+        </p>
       </Form>
       <div className="mt-5">
         <Button onClick={handelGoogleSignIn}>Connect With Google</Button>
